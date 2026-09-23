@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+    PrivacyInfo.xcprivacy — STUHI (org.stuhi.app)
+    Nuorten startup- ja innovaatioyhdistys ry — Apple Developer Team Q485H7YK66
+    (NEVER build this target under the personal team DQ54FKG6B4.)
+
+    ============================================================================
+    KEEP IN SYNC WITH THE APP STORE CONNECT "APP PRIVACY" QUESTIONNAIRE.
+    A mismatch between this file and those answers is a rejection.
+    The questionnaire answers this file corresponds to, exactly:
+
+      Do you or your third-party partners collect data from this app?   YES
+      Does your app use data for tracking (ATT)?                        NO
+
+      Contact Info  > Name .............. YES · App Functionality · Linked · Not tracking
+      Contact Info  > Email Address ..... YES · App Functionality · Linked · Not tracking
+      Contact Info  > Phone Number ...... NO
+      Contact Info  > Physical Address .. NO
+      Contact Info  > Other Contact Info  NO
+      Identifiers   > User ID ........... YES · App Functionality · Linked · Not tracking
+      Identifiers   > Device ID ......... YES · App Functionality · Linked · Not tracking
+                                          (APNs device token — "other device-level ID")
+      User Content  > Other User Content  YES · App Functionality · Linked · Not tracking
+                                          (free-text bio, team name/description, chosen
+                                           roles, challenge preferences, join requests
+                                           and invites, report notes)
+      User Content  > Photos or Videos .. NO   (no avatars / no photo upload in v1)
+      User Content  > Audio, Gameplay, Customer Support, Emails or Text Messages ... NO
+      Other Data    > Other Data Types .. YES · App Functionality · Linked · Not tracking
+                                          (team membership, door check-in timestamps,
+                                           meal-claim timestamps, member/monk role flag)
+
+      Health & Fitness / Financial Info / Location / Sensitive Info /
+      Contacts / Browsing History / Search History / Purchases /
+      Usage Data (all) / Diagnostics (all) ......................... NO
+
+    Resulting public label: "Data Linked to You: Contact Info, User Content,
+    Identifiers, Other Data."  "Data Used to Track You" must be EMPTY.
+
+    Also keep in sync with:
+      - https://stuhi.org/privacy  (the itemised data table + retention schedule)
+      - the Review Notes paragraph on data collection
+    If v1.1 adds profile photos, AI moderation, analytics, or any third-party
+    SDK that collects data, UPDATE THIS FILE AND THE QUESTIONNAIRE FIRST.
+
+    NOTES ON WHAT IS DELIBERATELY ABSENT:
+      - Password: Apple publishes no "credentials" data type; GoTrue stores a
+        bcrypt hash server-side. Correctly omitted.
+      - Camera frames: decoded in memory by the staff QR scanner, never written
+        to disk and never transmitted. Not "collected" per Apple's definition.
+      - Language preference: kept device-local in UserDefaults, never synced.
+      - Luma roster import: happens server-side, not in this binary.
+      - Third-party SDKs: none. Apple's rule is that SDKs ship their own
+        manifests; verify with Product > Archive > Generate Privacy Report
+        before every submission and reconcile against the questionnaire.
+
+    BUILD CHECK: this file must be a RESOURCE OF THE APP TARGET and land at the
+    root of the .app bundle. Verify after export:
+      unzip -q build/export/StuhiApp.ipa -d /tmp/ipa
+      ls /tmp/ipa/Payload/StuhiApp.app/PrivacyInfo.xcprivacy
+    ============================================================================
+-->
+<plist version="1.0">
+<dict>
+	<!-- ===================== Tracking ===================== -->
+	<!-- No ATT prompt, no NSUserTrackingUsageDescription, no ad or analytics SDKs. -->
+	<key>NSPrivacyTracking</key>
+	<false/>
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+
+	<!-- ===================== Collected data ===================== -->
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array>
+		<!-- Email address: Supabase GoTrue sign-in, matching to the event
+		     registration, and the @stuhi.org precondition for monk access. -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeEmailAddress</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+
+		<!-- Display name: door staff identify the QR holder; shown to other
+		     attendees in team matching. -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeName</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+
+		<!-- Supabase auth user uuid: primary key, and the subject of the
+		     server-signed admission token. -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeUserID</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+
+		<!-- APNs device token, stored server-side to deliver operational push
+		     (meal service, schedule changes, team placement). Apple defines
+		     Device ID as "the device's advertising identifier, or other
+		     device-level ID" — the APNs token is a device-level ID. -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeDeviceID</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+
+		<!-- Free-text bio, team name and description, chosen roles from the
+		     fixed taxonomy, challenge preferences, join requests and invites,
+		     and free-text notes attached to a report. -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeOtherUserContent</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+
+		<!-- Team membership, door admission timestamps, meal-claim timestamps
+		     and the member/monk role flag. Deliberately NOT Product Interaction
+		     or Other Usage Data: a physical-world door check-in is not app
+		     telemetry, and "Usage Data" on the public label would read as
+		     analytics, which this app does not do. -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeOtherDataTypes</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- ===================== Required-reason APIs ===================== -->
+	<!-- Since 1 May 2024 App Store Connect REJECTS AT UPLOAD any app that uses
+	     a required-reason API without declaring it here. -->
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array>
+		<!-- UserDefaults, reached via @AppStorage for the onboarding-seen flag,
+		     the chosen role lane and the language override. CA92.1 = access to
+		     user defaults readable and writable only by this app itself.
+		     IF an App Group is ever introduced (widget, Live Activity,
+		     Notification Service Extension), this reason MUST change to 1C8F.1
+		     and each extension bundle needs its own manifest.
+		     The Supabase session/refresh token belongs in the Keychain, which is
+		     not a required-reason API — never in UserDefaults. -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>CA92.1</string>
+			</array>
+		</dict>
+
+		<!-- File timestamps: NOT declared, because the offline cache of the
+		     schedule and challenge JSON stores its ETag / Last-Modified value
+		     alongside the payload in UserDefaults rather than reading the
+		     filesystem's own timestamps. If that ever changes, uncomment the
+		     block below (C617.1 = metadata of files inside the app container,
+		     app group container, or the app's CloudKit container).
+
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>C617.1</string>
+			</array>
+		</dict>
+		-->
+
+		<!-- Not applicable and deliberately absent:
+		     NSPrivacyAccessedAPICategorySystemBootTime
+		     NSPrivacyAccessedAPICategoryDiskSpace
+		     NSPrivacyAccessedAPICategoryActiveKeyboards
+		     Re-check these against any dependency added later. -->
+	</array>
+</dict>
+</plist>

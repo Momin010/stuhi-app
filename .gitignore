@@ -1,0 +1,25 @@
+# Secrets — the keys live in ~/.stuhi-app/env and are written in by
+# scripts/make-config.sh. Never commit the generated file.
+ios/StuhiApp/Config.swift
+.env
+*.p12
+*.key
+
+# Xcode
+ios/*.xcodeproj
+ios/*.xcworkspace
+ios/build/
+ios/DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# macOS
+.DS_Store
+
+# Imported personal data — guest lists are never committed
+data/
+*.csv
+!docs/**/*.csv
+
+# CI signing material never lives in the repo
+*.mobileprovision
