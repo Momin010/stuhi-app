@@ -37,7 +37,7 @@ targets:
         INFOPLIST_KEY_NSCameraUsageDescription: "STUHI uses the camera to scan admission QR codes at the door and at meal points."
         # HTTPS/TLS only, which is exempt — stops App Store Connect asking the
         # export compliance question on every upload.
-        ITSAppUsesNonExemptEncryption: NO
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         TARGETED_DEVICE_FAMILY: "1"
         ENABLE_USER_SCRIPT_SANDBOXING: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon

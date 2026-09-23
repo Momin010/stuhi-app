@@ -29,9 +29,9 @@ actor Supabase {
         apiKey = Config.supabasePublishableKey
 
         let cfg = URLSessionConfiguration.default
-        // Fail fast. waitsForConnectivity made a request on a bad network wait
-        // for up to the resource timeout (7 days by default) — that was the
-        // "sign in spins forever".
+        // Fail fast. With waitsForConnectivity on, a request on a bad network
+        // sat waiting for up to the resource timeout (7 days by default)
+        // instead of telling the user.
         cfg.timeoutIntervalForRequest = 15
         cfg.timeoutIntervalForResource = 30
         cfg.waitsForConnectivity = false
